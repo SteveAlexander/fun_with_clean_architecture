@@ -16,7 +16,7 @@ class CreateItemInteractor {
   CreateItemInteractor(this.itemStore);
 
   Future<void> create(Item item) {
-    if (item.description.isEmpty) {
+    if (item.description.trim().isEmpty) {
       throw FormatException('The description is empty.');
     }
     return itemStore.save(item);
@@ -54,6 +54,14 @@ void main() {
     when(itemStore).calls(#save).thenAnswer(doNothing);
     final interactor = CreateItemInteractor(itemStore);
     final item = Item('');
+    expect(() => interactor.create(item), throwsFormatException);
+  });
+
+  test('throws an exception when the description is blank', () {
+    final itemStore = ItemStoreMock();
+    when(itemStore).calls(#save).thenAnswer(doNothing);
+    final interactor = CreateItemInteractor(itemStore);
+    final item = Item('   \t\t\t \n   ');
     expect(() => interactor.create(item), throwsFormatException);
   });
 }
