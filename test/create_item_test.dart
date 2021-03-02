@@ -26,16 +26,19 @@ class CreateItemInteractor {
 Object? doNothing(Invocation invocation) => Future(() {});
 
 void main() {
+  final itemStore = ItemStoreMock();
+  final interactor = CreateItemInteractor(itemStore);
+
+  setUp(() {
+    when(itemStore).calls(#save).thenAnswer(doNothing);
+  });
+
   test('it is possible to create an item with a description', () {
     Item('description');
   });
 
   test('it persists the item', () async {
     final description = 'Buy some milk';
-    final itemStore = ItemStoreMock();
-    final interactor = CreateItemInteractor(itemStore);
-
-    when(itemStore).calls(#save).thenAnswer(doNothing);
 
     await interactor.create(Item(description));
 
@@ -50,19 +53,12 @@ void main() {
   });
 
   test('throws an exception when the description is the empty string', () {
-    final itemStore = ItemStoreMock();
-    when(itemStore).calls(#save).thenAnswer(doNothing);
-    final interactor = CreateItemInteractor(itemStore);
-    final item = Item('');
-    expect(() => interactor.create(item), throwsFormatException);
+    expect(() => interactor.create(Item('')), throwsFormatException);
   });
 
   test('throws an exception when the description is blank', () {
-    final itemStore = ItemStoreMock();
-    when(itemStore).calls(#save).thenAnswer(doNothing);
-    final interactor = CreateItemInteractor(itemStore);
-    final item = Item('   \t\t\t \n   ');
-    expect(() => interactor.create(item), throwsFormatException);
+    expect(() => interactor.create(Item('   \t\t\t \n   ')),
+        throwsFormatException);
   });
 }
 
