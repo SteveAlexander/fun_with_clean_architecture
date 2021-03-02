@@ -20,6 +20,8 @@ class CreateItem {
   }
 }
 
+Object? doNothing(Invocation invocation) => Future(() {});
+
 void main() {
   test('it is possible to create an item with a description', () {
     Item('description');
@@ -30,9 +32,7 @@ void main() {
     final itemStore = ItemStoreDouble();
     final interactor = CreateItem(itemStore);
 
-    when(itemStore).calls(#save).thenAnswer((_) => Future(() {
-          return;
-        }));
+    when(itemStore).calls(#save).thenAnswer(doNothing);
 
     await interactor.create(Item(description));
 
