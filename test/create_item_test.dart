@@ -29,7 +29,7 @@ void main() {
 
   test('it persists the item', () async {
     final description = 'Buy some milk';
-    final itemStore = ItemStoreDouble();
+    final itemStore = ItemStoreMock();
     final interactor = CreateItem(itemStore);
 
     when(itemStore).calls(#save).thenAnswer(doNothing);
@@ -47,4 +47,4 @@ void main() {
   });
 }
 
-class ItemStoreDouble extends Mock implements ItemStore {}
+class ItemStoreMock extends Mock implements ItemStore {}
