@@ -49,8 +49,7 @@ void main() {
     expect(capturedItem.description, description);
   });
 
-  test('throws an exception when the description is the empty string',
-      () async {
+  test('throws an exception when the description is the empty string', () {
     final itemStore = ItemStoreMock();
     when(itemStore).calls(#save).thenAnswer(doNothing);
     final interactor = CreateItemInteractor(itemStore);
