@@ -10,10 +10,10 @@ abstract class ItemStore {
   Future<void> save(Item item);
 }
 
-class CreateItem {
+class CreateItemInteractor {
   final ItemStore itemStore;
 
-  CreateItem(this.itemStore);
+  CreateItemInteractor(this.itemStore);
 
   Future<void> create(Item item) {
     return itemStore.save(item);
@@ -30,7 +30,7 @@ void main() {
   test('it persists the item', () async {
     final description = 'Buy some milk';
     final itemStore = ItemStoreMock();
-    final interactor = CreateItem(itemStore);
+    final interactor = CreateItemInteractor(itemStore);
 
     when(itemStore).calls(#save).thenAnswer(doNothing);
 
