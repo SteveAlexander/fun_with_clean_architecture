@@ -13,6 +13,9 @@ void main() {
   final now = DateTime.utc(2021, 2, 18, 16, 45, 59);
   final interactor = CreateItemInteractor(itemStore, clock);
   final description = 'Buy some milk';
+  final item = Item((b) => b
+    ..description = description
+    ..ctime = now);
 
   setUp(() {
     when(clock).calls(#now).thenReturn(DateTime.utc(2021, 2, 18, 16, 45, 59));
@@ -26,9 +29,7 @@ void main() {
   });
 
   test('it persists the item', () async {
-    await interactor.create(ItemCompanion(
-      description,
-    ));
+    await interactor.create(ItemCompanion(description));
 
     final callsToSave = verify(itemStore)
         .called(#save)
@@ -36,19 +37,11 @@ void main() {
     final argsToOnlyCallToSave = callsToSave.single;
     final capturedItem = argsToOnlyCallToSave.single;
 
-    expect(capturedItem, isA<Item>());
-    expect(capturedItem.description, description);
-    expect(capturedItem.ctime.isAtSameMomentAs(now), isTrue);
-    expect(capturedItem.ctime.isUtc, isTrue);
+    expect(capturedItem, item);
   });
 
   test('it returns the created item', () {
-    expect(
-        interactor.create(ItemCompanion(description)),
-        completion(isA<Item>()
-            .having((item) => item.description, 'description', description)
-            .having((item) => item.ctime.isAtSameMomentAs(now), 'created time',
-                isTrue)));
+    expect(interactor.create(ItemCompanion(description)), completion(item));
   });
 
   test('throws an exception when the description is the empty string', () {
