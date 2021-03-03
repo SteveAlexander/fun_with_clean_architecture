@@ -2,16 +2,16 @@ import 'package:fun_with_clean_architecture/entities.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-abstract class ItemCollection {
-  Future<List<Item>> all();
+abstract class ItemSelector {
+  Future<List<Item>> allSortedChronologically();
 }
 
 class ListItemsInteractor {
-  final ItemCollection _itemCollection;
+  final ItemSelector _itemCollection;
   ListItemsInteractor(this._itemCollection);
 
   Future<List<Item>> listItems() async {
-    return _itemCollection.all();
+    return _itemCollection.allSortedChronologically();
   }
 }
 
@@ -25,12 +25,16 @@ void main() {
     ..ctime = instant);
 
   test('no preexisting items', () {
-    when(itemCollection).calls(#all).thenAnswer((_) => Future(() => <Item>[]));
+    when(itemCollection)
+        .calls(#allSortedChronologically)
+        .thenAnswer((_) => Future(() => <Item>[]));
     expect(interactor.listItems(), completion(isEmpty));
   });
 
   test('one item', () {
-    when(itemCollection).calls(#all).thenAnswer((_) => Future(() => [item]));
+    when(itemCollection)
+        .calls(#allSortedChronologically)
+        .thenAnswer((_) => Future(() => [item]));
     expect(interactor.listItems(), completion(orderedEquals([item])));
   });
 
@@ -38,9 +42,11 @@ void main() {
     final anotherItem =
         item.rebuild((b) => b..ctime = item.ctime.subtract(Duration(hours: 1)));
     final allItems = [item, anotherItem];
-    when(itemCollection).calls(#all).thenAnswer((_) => Future(() => allItems));
+    when(itemCollection)
+        .calls(#allSortedChronologically)
+        .thenAnswer((_) => Future(() => allItems));
     expect(interactor.listItems(), completion(allItems));
   });
 }
 
-class ItemCollectionMock extends Mock implements ItemCollection {}
+class ItemCollectionMock extends Mock implements ItemSelector {}
