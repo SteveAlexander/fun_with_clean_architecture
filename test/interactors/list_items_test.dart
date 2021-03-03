@@ -1,19 +1,9 @@
-import 'package:fun_with_clean_architecture/entities.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
-abstract class ListItemsCapability {
-  Future<List<Item>> allSortedChronologically();
-}
-
-class ListItemsInteractor {
-  final ListItemsCapability _gateway;
-  ListItemsInteractor(this._gateway);
-
-  Future<List<Item>> listItems() async {
-    return _gateway.allSortedChronologically();
-  }
-}
+import 'package:fun_with_clean_architecture/entities.dart';
+import 'package:fun_with_clean_architecture/src/list_items_interactor.dart'
+    show ListItemsCapability, ListItemsInteractor;
 
 void main() {
   final gateway = ListItemsCapabilityMock();

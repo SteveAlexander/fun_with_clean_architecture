@@ -1,8 +1,8 @@
 import 'package:fun_with_clean_architecture/entities.dart' show Item;
 import 'package:fun_with_clean_architecture/interactors.dart'
-    show StoreItemCapability;
+    show ListItemsCapability, StoreItemCapability;
 
-class InMemoryItemStore implements StoreItemCapability {
+class InMemoryItemStore implements StoreItemCapability, ListItemsCapability {
   final _items = <Item>[];
 
   @override
@@ -12,6 +12,7 @@ class InMemoryItemStore implements StoreItemCapability {
 
   List<Item> toList() => [..._items];
 
+  @override
   Future<List<Item>> allSortedChronologically() async {
     return toList();
   }
