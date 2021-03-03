@@ -7,7 +7,6 @@ abstract class ItemCollection {
 }
 
 class ListItemsInteractor {
-  // ignore: unused_field
   final ItemCollection _itemCollection;
   ListItemsInteractor(this._itemCollection);
 
@@ -40,6 +39,14 @@ void main() {
                 .having((item) => item.description, 'description', description)
                 .having((item) => item.ctime.isAtSameMomentAs(instant), 'ctime',
                     isTrue)))));
+  });
+
+  test('two items', () async {
+    final anotherItem =
+        item.rebuild((b) => b..ctime = item.ctime.subtract(Duration(hours: 1)));
+    final allItems = [item, anotherItem];
+    when(itemCollection).calls(#all).thenAnswer((_) => Future(() => allItems));
+    expect(interactor.listItems(), completion(allItems));
   });
 }
 
