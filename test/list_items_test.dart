@@ -17,20 +17,19 @@ class ListItemsInteractor {
 }
 
 void main() {
+  final itemCollection = ItemCollectionMock();
+  final interactor = ListItemsInteractor(itemCollection);
+
   test('no preexisting items', () {
-    final itemStore = ItemStoreMock();
-    when(itemStore).calls(#all).thenAnswer((_) => Future(() => <Item>[]));
-    final interactor = ListItemsInteractor(itemStore);
+    when(itemCollection).calls(#all).thenAnswer((_) => Future(() => <Item>[]));
     expect(interactor.listItems(), completion(isEmpty));
   });
 
   test('one item', () {
     final description = '::irrelevant description::';
     final instant = DateTime.utc(2021, 2, 18, 16, 45, 59);
-    final itemCollection = ItemStoreMock();
     final item = Item(description, ctime: instant);
     when(itemCollection).calls(#all).thenAnswer((_) => Future(() => [item]));
-    final interactor = ListItemsInteractor(itemCollection);
     expect(
         interactor.listItems(),
         completion(allOf(
@@ -42,4 +41,4 @@ void main() {
   });
 }
 
-class ItemStoreMock extends Mock implements ItemCollection {}
+class ItemCollectionMock extends Mock implements ItemCollection {}
