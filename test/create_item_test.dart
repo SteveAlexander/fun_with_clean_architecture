@@ -1,15 +1,10 @@
+import 'package:fun_with_clean_architecture/entities.dart' show Item;
 import 'package:test/test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class ItemCompanion {
   final String description;
   ItemCompanion(this.description);
-}
-
-class Item {
-  final DateTime ctime;
-  final String description;
-  Item(this.description, {required this.ctime});
 }
 
 abstract class ItemStore {

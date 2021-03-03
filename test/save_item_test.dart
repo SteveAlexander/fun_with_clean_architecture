@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'create_item_test.dart';
+import 'package:fun_with_clean_architecture/entities.dart' show Item;
 
 void main() {
   test('it persists the item', () async {
