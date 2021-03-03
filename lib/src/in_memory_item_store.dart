@@ -13,6 +13,6 @@ class InMemoryItemStore implements StoreItemCapability {
   List<Item> toList() => [..._items];
 
   Future<List<Item>> allSortedChronologically() async {
-    return [];
+    return toList();
   }
 }
