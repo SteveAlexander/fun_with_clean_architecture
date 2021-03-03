@@ -23,7 +23,9 @@ class CreateItemInteractor {
     if (itemCompanion.description.trim().isEmpty) {
       throw FormatException('The description is empty.');
     }
-    final item = Item(itemCompanion.description, ctime: clock.now());
+    final item = Item((b) => b
+      ..description = itemCompanion.description
+      ..ctime = clock.now());
     await itemStore.save(item);
     return item;
   }

@@ -20,7 +20,9 @@ void main() {
   });
 
   test('it is possible to create an item with a description', () {
-    Item('description', ctime: DateTime.now());
+    Item((b) => b
+      ..description = 'description'
+      ..ctime = DateTime.now());
   });
 
   test('it persists the item', () async {

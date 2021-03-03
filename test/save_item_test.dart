@@ -7,7 +7,9 @@ void main() {
     final itemStore = InMemoryItemStore();
     final description = 'Buy some peanut butter';
     final instant = DateTime.utc(2021, 2, 18, 16, 45, 59);
-    final item = Item(description, ctime: instant);
+    final item = Item((b) => b
+      ..description = description
+      ..ctime = instant);
 
     await itemStore.save(item);
 

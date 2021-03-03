@@ -26,6 +26,7 @@ dependencies:
   flutter_riverpod: ^0.13.0-nullsafety.3
   pedantic: ^1.10.0
   shared_preferences: ^2.0.1
+  built_value: ^8.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -35,11 +36,14 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   test: ^1.16.4
+  built_value_generator: ^8.0.0
+  build_runner: ^1.11.1
   mocktail:
     git:
       url: https://github.com/svarlet/mocktail.git
       path: packages/mocktail
       ref: 5b893b02c6c7e2c0280df78cc614d3d69ffba736
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
