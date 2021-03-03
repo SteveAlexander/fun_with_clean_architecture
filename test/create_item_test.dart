@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 
 import 'package:fun_with_clean_architecture/entities.dart' show Item;
 import 'package:fun_with_clean_architecture/interactors.dart'
-    show Clock, CreateItemInteractor, ItemCompanion, ItemStore;
+    show Clock, CreateItemInteractor, ItemCompanion, StoreItemCapability;
 
 Object? doNothing(Invocation invocation) => Future(() {});
 
@@ -54,6 +54,6 @@ void main() {
   });
 }
 
-class ItemStoreMock extends Mock implements ItemStore {}
+class ItemStoreMock extends Mock implements StoreItemCapability {}
 
 class ClockMock extends Mock implements Clock {}
