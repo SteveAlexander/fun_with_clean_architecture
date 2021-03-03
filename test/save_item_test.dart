@@ -13,12 +13,7 @@ void main() {
 
     await itemStore.save(item);
 
-    expect(
-        itemStore.toList().single,
-        isA<Item>()
-            .having((item) => item.description, 'description', description)
-            .having((item) => item.ctime.isAtSameMomentAs(instant),
-                'created time', isTrue));
+    expect(itemStore.toList(), orderedEquals([item]));
   });
 }
 
