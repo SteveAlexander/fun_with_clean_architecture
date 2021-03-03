@@ -31,14 +31,7 @@ void main() {
 
   test('one item', () {
     when(itemCollection).calls(#all).thenAnswer((_) => Future(() => [item]));
-    expect(
-        interactor.listItems(),
-        completion(allOf(
-            hasLength(1),
-            contains(isA<Item>()
-                .having((item) => item.description, 'description', description)
-                .having((item) => item.ctime.isAtSameMomentAs(instant), 'ctime',
-                    isTrue)))));
+    expect(interactor.listItems(), completion(orderedEquals([item])));
   });
 
   test('two items', () async {
