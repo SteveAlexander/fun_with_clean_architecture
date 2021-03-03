@@ -1,6 +1,8 @@
 import 'package:test/test.dart';
 
 import 'package:fun_with_clean_architecture/entities.dart' show Item;
+import 'package:fun_with_clean_architecture/interface_adapters.dart'
+    show InMemoryItemStore;
 
 void main() {
   test('it persists the item', () async {
@@ -15,14 +17,4 @@ void main() {
 
     expect(itemStore.toList(), orderedEquals([item]));
   });
-}
-
-class InMemoryItemStore {
-  final _items = <Item>[];
-
-  Future<void> save(Item item) async {
-    _items.add(item);
-  }
-
-  List<Item> toList() => [..._items];
 }
