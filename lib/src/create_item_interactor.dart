@@ -15,9 +15,9 @@ abstract class Clock {
 
 class CreateItemInteractor {
   final Clock clock;
-  final StoreItemCapability storage;
+  final StoreItemCapability gateway;
 
-  CreateItemInteractor(this.storage, this.clock);
+  CreateItemInteractor(this.gateway, this.clock);
 
   Future<Item> create(ItemCompanion itemCompanion) async {
     if (itemCompanion.description.trim().isEmpty) {
@@ -26,7 +26,7 @@ class CreateItemInteractor {
     final item = Item((b) => b
       ..description = itemCompanion.description
       ..ctime = clock.now());
-    await storage.save(item);
+    await gateway.save(item);
     return item;
   }
 }
