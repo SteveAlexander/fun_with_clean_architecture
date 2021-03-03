@@ -10,12 +10,12 @@ Object? doNothing(Invocation invocation) => Future(() {});
 void main() {
   final itemStore = ItemStoreMock();
   final clock = ClockMock();
-  final now = DateTime.utc(2021, 2, 18, 16, 45, 59);
+  final instant = DateTime.utc(2021, 2, 18, 16, 45, 59);
   final interactor = CreateItemInteractor(itemStore, clock);
   final description = 'Buy some milk';
   final item = Item((b) => b
     ..description = description
-    ..ctime = now);
+    ..ctime = instant);
 
   setUp(() {
     when(clock).calls(#now).thenReturn(DateTime.utc(2021, 2, 18, 16, 45, 59));
