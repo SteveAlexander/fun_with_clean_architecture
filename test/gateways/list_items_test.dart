@@ -18,11 +18,12 @@ void main() {
   });
 
   test('one preexisting todo item', () async {
-    final description = '::irrelevant description::';
     final item = Item((b) => b
-      ..description = description
+      ..description = '::irrelevant description::'
       ..ctime = DateTime.utc(2021, 2, 18, 16, 45, 59));
     await storageGateway.save(item);
     expect(listGateway.allSortedChronologically(), completion([item]));
   });
+
+  // test('with 2 items, they are returned in chronological order', () async {});
 }
