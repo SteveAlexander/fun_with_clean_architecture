@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
 import 'package:fun_with_clean_architecture/entities.dart' show Item;
-import 'package:fun_with_clean_architecture/interface_adapters.dart'
+import 'package:fun_with_clean_architecture/gateways.dart'
     show InMemoryItemStore;
 
 void main() {
