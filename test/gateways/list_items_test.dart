@@ -25,5 +25,15 @@ void main() {
     expect(listGateway.allSortedChronologically(), completion([item]));
   });
 
-  // test('with 2 items, they are returned in chronological order', () async {});
+  test('with 2 items, they are returned in chronological order', () async {
+    final oldItem = Item((b) => b
+      ..description = '::irrelevant description::'
+      ..ctime = DateTime.utc(2021, 2, 18, 16, 45, 59));
+    final recentItem =
+        oldItem.rebuild((b) => b..ctime = oldItem.ctime.add(Duration(days: 1)));
+    await storageGateway.save(recentItem);
+    await storageGateway.save(oldItem);
+    expect(listGateway.allSortedChronologically(),
+        completion([oldItem, recentItem]));
+  });
 }

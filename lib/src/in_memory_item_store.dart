@@ -14,6 +14,6 @@ class InMemoryItemStore implements StoreItemCapability, ListItemsCapability {
 
   @override
   Future<List<Item>> allSortedChronologically() async {
-    return toList();
+    return toList()..sort((a, b) => a.ctime.compareTo(b.ctime));
   }
 }
