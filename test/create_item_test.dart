@@ -37,6 +37,7 @@ void main() {
     expect(capturedItem, isA<Item>());
     expect(capturedItem.description, description);
     expect(capturedItem.ctime.isAtSameMomentAs(now), isTrue);
+    expect(capturedItem.ctime.isUtc, isTrue);
   });
 
   test('it returns the created item', () {
