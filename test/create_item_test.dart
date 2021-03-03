@@ -26,12 +26,13 @@ class CreateItemInteractor {
 
   CreateItemInteractor(this.itemStore, this.clock);
 
-  Future<void> create(ItemCompanion itemCompanion) {
+  Future<Item> create(ItemCompanion itemCompanion) async {
     if (itemCompanion.description.trim().isEmpty) {
       throw FormatException('The description is empty.');
     }
     final item = Item(itemCompanion.description, ctime: clock.now());
-    return itemStore.save(item);
+    await itemStore.save(item);
+    return item;
   }
 }
 
@@ -42,6 +43,7 @@ void main() {
   final clock = ClockMock();
   final now = DateTime.utc(2021, 2, 18, 16, 45, 59);
   final interactor = CreateItemInteractor(itemStore, clock);
+  final description = 'Buy some milk';
 
   setUp(() {
     when(clock).calls(#now).thenReturn(DateTime.utc(2021, 2, 18, 16, 45, 59));
@@ -53,8 +55,6 @@ void main() {
   });
 
   test('it persists the item', () async {
-    final description = 'Buy some milk';
-
     await interactor.create(ItemCompanion(
       description,
     ));
@@ -68,6 +68,15 @@ void main() {
     expect(capturedItem, isA<Item>());
     expect(capturedItem.description, description);
     expect(capturedItem.ctime.isAtSameMomentAs(now), isTrue);
+  });
+
+  test('it returns the created item', () {
+    expect(
+        interactor.create(ItemCompanion(description)),
+        completion(isA<Item>()
+            .having((item) => item.description, 'description', description)
+            .having((item) => item.ctime.isAtSameMomentAs(now), 'created time',
+                isTrue)));
   });
 
   test('throws an exception when the description is the empty string', () {
