@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fun_with_clean_architecture/entities.dart';
 
 class ItemCompanion {
@@ -14,10 +16,10 @@ abstract class Clock {
 }
 
 class CreateItemInteractor {
-  final Clock clock;
-  final StoreItemCapability gateway;
+  final Clock _clock;
+  final StoreItemCapability _gateway;
 
-  CreateItemInteractor(this.gateway, this.clock);
+  CreateItemInteractor(this._gateway, this._clock);
 
   Future<Item> create(ItemCompanion itemCompanion) async {
     if (itemCompanion.description.trim().isEmpty) {
@@ -25,8 +27,8 @@ class CreateItemInteractor {
     }
     final item = Item((b) => b
       ..description = itemCompanion.description
-      ..ctime = clock.now());
-    await gateway.save(item);
+      ..ctime = _clock.now());
+    await _gateway.save(item);
     return item;
   }
 }
