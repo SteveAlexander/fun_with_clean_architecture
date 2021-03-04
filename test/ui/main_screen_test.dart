@@ -87,42 +87,11 @@ void main() {
     await tester.pumpWithScope(TodoList(), provider);
     await tester.pumpAndSettle();
     expect(find.byType(Card), findsNWidgets(2));
-
     expect(
-        tester.getTopLeft(find.widgetWithText(Card, 'first item')).dy,
-        lessThan(
-          tester.getTopLeft(find.widgetWithText(Card, 'second item')).dy,
-        ));
+      tester.getTopLeft(find.widgetWithText(Card, 'first item')).dy,
+      lessThan(
+        tester.getTopLeft(find.widgetWithText(Card, 'second item')).dy,
+      ),
+    );
   });
-
-  // testWidgets('home screen initial state', (WidgetTester tester) async {
-  //   // Wire up back end stuff
-  //   await tester.pumpWidget(
-  //     ProviderScope(
-  //       overrides: [providers.overrideWithValue(provider)],
-  //       child: MyApp(),
-  //     ),
-  //   );
-  //   expect(find.text('Todos'), findsOneWidget);
-  //   expect(find.byType(NoDataWidget), findsOneWidget);
-  //   await tester.pump();
-  //   expect(find.text('some item'), findsOneWidget);
-
-  // NEXT: refactor tests, extend tests to add an item
-
-  // expect(find.text('Buy peanut butter'), findsOneWidget);
-  // expect(find.text('Sell Ascential shares'), findsOneWidget);
-
-  // // Verify that our counter starts at 0.
-  // expect(find.text('A'), findsOneWidget);
-  // expect(find.text('1'), findsNothing);
-
-  // // Tap the '+' icon and trigger a frame.
-  // await tester.tap(find.byIcon(Icons.add));
-  // await tester.pump();
-
-  // // Verify that our counter has incremented.
-  // expect(find.text('0'), findsNothing);
-  // expect(find.text('1'), findsOneWidget);
-  // });
 }
