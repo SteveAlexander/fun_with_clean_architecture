@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:fun_with_clean_architecture/entities.dart';
 
 class ItemCompanion {
