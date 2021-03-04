@@ -80,3 +80,13 @@ Note: not doing two use-cases at once (e.g. create + view), as this is a kind of
 ### consider UI fat marker concept
 
 see Shape Up from Basecamp
+
+## UI tests
+
+Implementing widget tests
+
+make a specific Widget class for the "UI entities", so that in the tests you
+can use `find.byType` to locate that thing, or those things, and the exact
+flutter implementation can change as needed, keeping the test the same.
+
+Similarly to the interator & gatewat tests, when implementing the UI, we might want to verify the existence of a widget with a specific type. While this proves such a widget exists, it doesn't prove that it has the expected desired behaviour. This suggests writing extra tests specifically for such a widget, in isolation. For example: is it clickable? when we click it, does it trigger the provided handler? 
