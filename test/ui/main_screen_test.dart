@@ -52,6 +52,8 @@ void main() {
     await tester.pump();
     expect(find.text('some item'), findsOneWidget);
 
+    // NEXT: refactor tests, extend tests to add an item
+
     // expect(find.text('Buy peanut butter'), findsOneWidget);
     // expect(find.text('Sell Ascential shares'), findsOneWidget);
 
