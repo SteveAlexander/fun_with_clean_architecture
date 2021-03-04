@@ -47,7 +47,15 @@ void main() {
     await tester.pumpWithScope(TodoList(), provider);
     expect(find.byType(NoDataWidget), findsOneWidget);
   });
-
+  testWidgets('There are no items, so show that there are no items',
+      (WidgetTester tester) async {
+    final provider = MockUiProviders();
+    when(provider).calls(#itemsUpdateStream).thenReturn(emptyItemStream());
+    await tester.pumpWithScope(TodoList(), provider);
+    await tester.pumpAndSettle();
+    expect(find.byType(Card), findsNothing);
+  });
+  
   //     [
   //       [
   //         Item((b) => b
