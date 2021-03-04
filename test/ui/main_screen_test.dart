@@ -56,7 +56,7 @@ void main() {
     when(provider).calls(#itemsUpdateStream).thenReturn(emptyItemStream());
     await tester.pumpWithScope(TodoList(), provider);
     await tester.pumpAndSettle();
-    expect(find.byType(Card), findsNothing);
+    expect(find.byType(ItemCard), findsNothing);
   });
   testWidgets('There is just one item', (WidgetTester tester) async {
     final provider = MockUiProviders();
@@ -69,8 +69,8 @@ void main() {
         ]));
     await tester.pumpWithScope(TodoList(), provider);
     await tester.pumpAndSettle();
-    expect(find.byType(Card), findsOneWidget);
-    expect(find.widgetWithText(Card, 'some item'), findsOneWidget);
+    expect(find.byType(ItemCard), findsOneWidget);
+    expect(find.widgetWithText(ItemCard, 'some item'), findsOneWidget);
   });
   testWidgets('There are two items', (WidgetTester tester) async {
     final provider = MockUiProviders();
@@ -86,11 +86,11 @@ void main() {
         ]));
     await tester.pumpWithScope(TodoList(), provider);
     await tester.pumpAndSettle();
-    expect(find.byType(Card), findsNWidgets(2));
+    expect(find.byType(ItemCard), findsNWidgets(2));
     expect(
-      tester.getTopLeft(find.widgetWithText(Card, 'first item')).dy,
+      tester.getTopLeft(find.widgetWithText(ItemCard, 'first item')).dy,
       lessThan(
-        tester.getTopLeft(find.widgetWithText(Card, 'second item')).dy,
+        tester.getTopLeft(find.widgetWithText(ItemCard, 'second item')).dy,
       ),
     );
   });

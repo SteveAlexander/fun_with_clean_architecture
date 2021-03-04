@@ -37,7 +37,20 @@ class TodoColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [for (final item in items) Card(child: Text(item.description))],
+      children: [for (final item in items) ItemCard(item)],
+    );
+  }
+}
+
+class ItemCard extends StatelessWidget {
+  final Item item;
+
+  ItemCard(this.item);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Text(item.description),
     );
   }
 }
