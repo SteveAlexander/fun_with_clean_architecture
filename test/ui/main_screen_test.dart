@@ -24,7 +24,10 @@ extension SetUpProviderScope on WidgetTester {
     return pumpWidget(
       ProviderScope(
         overrides: [providers.overrideWithValue(provider)],
-        child: widget,
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: widget,
+        ),
       ),
     );
   }
@@ -55,16 +58,42 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(Card), findsNothing);
   });
-  
-  //     [
-  //       [
-  //         Item((b) => b
-  //           ..description = 'some item'
-  //           ..ctime = DateTime(2020, 1, 1)),
-  //       ],
-  //     ],
-  //   ),
-  // );
+  testWidgets('There is just one item', (WidgetTester tester) async {
+    final provider = MockUiProviders();
+    when(provider).calls(#itemsUpdateStream).thenReturn(Stream.fromIterable([
+          [
+            Item((b) => b
+              ..description = 'some item'
+              ..ctime = DateTime(2020, 1, 1)),
+          ],
+        ]));
+    await tester.pumpWithScope(TodoList(), provider);
+    await tester.pumpAndSettle();
+    expect(find.byType(Card), findsOneWidget);
+    expect(find.widgetWithText(Card, 'some item'), findsOneWidget);
+  });
+  testWidgets('There are two items', (WidgetTester tester) async {
+    final provider = MockUiProviders();
+    when(provider).calls(#itemsUpdateStream).thenReturn(Stream.fromIterable([
+          [
+            Item((b) => b
+              ..description = 'first item'
+              ..ctime = DateTime(2020, 1, 1)),
+            Item((b) => b
+              ..description = 'second item'
+              ..ctime = DateTime(2020, 1, 1)),
+          ],
+        ]));
+    await tester.pumpWithScope(TodoList(), provider);
+    await tester.pumpAndSettle();
+    expect(find.byType(Card), findsNWidgets(2));
+
+    expect(
+        tester.getTopLeft(find.widgetWithText(Card, 'first item')).dy,
+        lessThan(
+          tester.getTopLeft(find.widgetWithText(Card, 'second item')).dy,
+        ));
+  });
 
   // testWidgets('home screen initial state', (WidgetTester tester) async {
   //   // Wire up back end stuff
